@@ -1,0 +1,109 @@
+.new-workflow-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .new-workflow-form h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .new-workflow-form form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .new-workflow-form label {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .new-workflow-form input,
+  .new-workflow-form textarea,
+  .new-workflow-form select {
+    font-size: 1rem;
+    padding: 5px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  
+  .new-workflow-form input:focus,
+  .new-workflow-form textarea:focus,
+  .new-workflow-form select:focus {
+    border-color: #3f51b5;
+  }
+  
+  .new-workflow-form button {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 8px 12px;
+    cursor: pointer;
+    margin-top: 15px;
+    border: none;
+  }
+  
+  .new-workflow-form button[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .new-workflow-form button[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
+  .new-workflow-form button[type="button"] {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .new-workflow-form button[type="button"]:hover {
+    background-color: #da190b;
+  }
+  
+  .new-workflow-form button[type="button"]:first-of-type {
+    background-color: #3f51b5;
+    color: white;
+    margin-right: 10px;
+  }
+  
+  .new-workflow-form button[type="button"]:first-of-type:hover {
+    background-color: #283593;
+  }
+  
+  .new-workflow-form select[multiple] {
+    min-height: 100px;
+}
+
+/* Task container */
+.new-workflow-form .task-container {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: #e0e0e0;
+}
+
+.new-workflow-form .task-container:not(:last-child) {
+  margin-bottom: 15px;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+  .new-workflow-form form {
+    width: 100%;
+  }
+}
+
+  

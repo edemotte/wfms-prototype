@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import CreateWorkflowButton from './components/CreateWorkflowButton';
 import { collection, getDocs, addDoc } from 'firebase/firestore';
 import db from './components/firebase';
+import WorkflowVisualization from './components/WorkflowVisualization';
+
+
 
 import NewWorkflowForm from './components/NewWorkflowForm';
 
@@ -53,6 +56,15 @@ function App() {
 
         {/* Add other components like Dashboard, NavigationMenu, etc. */}
       </main>
+
+      {workflows.map((workflow, index) => (
+        <div key={index} className="workflow-container">
+          <h3>{workflow.workflowName}</h3>
+          <p>{workflow.workflowDescription}</p>
+          <WorkflowVisualization workflow={workflow} />
+        </div>
+      ))}
+
     </div>
   );
 }

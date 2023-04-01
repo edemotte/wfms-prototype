@@ -1,0 +1,60 @@
+.workflow-visualization {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.task {
+  position: relative;
+  padding-left: 100px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.dependency-line {
+  overflow: visible;
+}
+
+.dependency-line line {
+  stroke: #333;
+  stroke-width: 2;
+  marker-end: url(#arrowhead);
+}
+
+.workflow-visualization .horizontal-line {
+  background-color: #333;
+  height: 2px;
+}
+
+.workflow-visualization .vertical-line {
+  background-color: #333;
+  width: 2px;
+}
+.workflow-visualization .task {
+  position: relative;
+  display: inline-block;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.workflow-visualization .task:hover .task-hover {
+  display: block;
+}
+
+.workflow-visualization .task-hover {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-top: 10px;
+  z-index: 1;
+  width: 200px;
+}

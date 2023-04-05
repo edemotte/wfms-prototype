@@ -1,7 +1,7 @@
 import React from 'react';
 import '../WorkflowVisualization.css';
 
-const WorkflowVisualization = ({ workflow }) => {
+const WorkflowVisualization = ({ workflow, onEditWorkflow, onDeleteWorkflow,setIsEditModalOpen }) => {
   const renderTasks = () => {
     return workflow.tasks.map((task, index) => (
       <div key={index} className="task">
@@ -11,6 +11,11 @@ const WorkflowVisualization = ({ workflow }) => {
           {task.assignee && <p>Assignee: {task.assignee}</p>}
           {task.dueDate && <p>Due Date: {task.dueDate}</p>}
           {task.priority && <p>Priority: {task.priority}</p>}
+          <button onClick={() => {
+            onEditWorkflow(index);
+            setIsEditModalOpen(true);
+          }}>Edit</button>
+          <button onClick={() => onDeleteWorkflow(index)}>Delete</button>
         </div>
       </div>
     ));

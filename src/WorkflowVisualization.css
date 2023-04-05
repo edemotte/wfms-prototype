@@ -58,3 +58,18 @@
   z-index: 1;
   width: 200px;
 }
+
+
+.workflow-visualization button {
+  margin-top: 10px;
+  margin-right: 5px;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.workflow-visualization button:hover {
+  background-color: #f5f5f5;
+}
+

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../NewWorkflowForm.css';
 
-const NewWorkflowForm = ({ saveWorkflow, closeWorkflowForm }) => {
+const NewWorkflowForm = ({ saveWorkflow, closeWorkflowForm, initialWorkflow, isEditMode,handleSaveEditedWorkflow   }) => {
   const [workflowName, setWorkflowName] = useState('');
   const [workflowDescription, setWorkflowDescription] = useState('');
   const [workflowVisibility, setWorkflowVisibility] = useState('public');
@@ -19,13 +19,27 @@ const NewWorkflowForm = ({ saveWorkflow, closeWorkflowForm }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    saveWorkflow({ workflowName, workflowDescription, workflowVisibility, tasks });
+    const workflowData = { workflowName, workflowDescription, workflowVisibility, tasks };
+    if (isEditMode) {
+      handleSaveEditedWorkflow(workflowData);
+    } else {
+      saveWorkflow(workflowData);
+    }
     closeWorkflowForm();
   };
 
+  useEffect(() => {
+    if (initialWorkflow) {
+      setWorkflowName(initialWorkflow.workflowName);
+      setWorkflowDescription(initialWorkflow.workflowDescription);
+      setWorkflowVisibility(initialWorkflow.workflowVisibility);
+      setTasks(initialWorkflow.tasks);
+    }
+  }, [initialWorkflow]);
+
   return (
     <div className="new-workflow-form">
-           <h2>Create a New Workflow</h2>
+           <h2>{isEditMode ? 'Edit Workflow' : 'Create a New Workflow'}</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="workflowName">Workflow Name:</label>
         <input

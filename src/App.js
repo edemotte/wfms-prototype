@@ -2,10 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import CreateWorkflowButton from './components/CreateWorkflowButton';
 import { doc, collection, getDocs, addDoc,updateDoc, deleteDoc } from 'firebase/firestore';
-import db from './components/firebase';
+import  { db, auth } from './components/firebase';
 import WorkflowVisualization from './components/WorkflowVisualization';
 import Modal from './components/Modal';
 import EditWorkflowForm from './components/EditWorkflowForm';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import Auth from './components/Auth';
+import { signOut } from 'firebase/auth';
+import './App.css'
 
 
 
@@ -18,12 +22,33 @@ function App() {
   const [selectedWorkflow, setSelectedWorkflow] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [user, setUser] = useState(null);
 
-
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      console.log('User signed out');
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+  
 
   const openWorkflowForm = () => setShowWorkflowForm(true);
   // const closeWorkflowForm = () => setShowWorkflowForm(false);
   const [workflows, setWorkflows] = useState([]);
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    // Clean up the listener when the component unmounts
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   useEffect(() => {
     const fetchWorkflows = async () => {
@@ -100,43 +125,34 @@ const handleDeleteWorkflow = async (workflowToDelete) => {
   
 
   return (
+
+    
+
     <div className="App">
-<header>
-        {/* Add your header components here */}
+      { user ? (
+
+        <>
+      <header>
+      <button onClick={handleSignOut}>Sign out</button>
       </header>
 
       <main>
         <CreateWorkflowButton openWorkflowForm={openWorkflowForm} />
-        {/* {showWorkflowForm && (
-          <NewWorkflowForm 
-            saveWorkflow={saveWorkflow} 
-            closeWorkflowForm={() => setShowEditModal(false)} 
-            initialWorkflow={selectedWorkflow}
-            isEditMode={isEditModalOpen}
-            handleSaveEditedWorkflow={handleSaveEditedWorkflow}
+        {showWorkflowForm && !isEditModalOpen && (
+          <NewWorkflowForm
+            saveWorkflow={saveWorkflow}
+            closeWorkflowForm={closeWorkflowForm}
+            initialWorkflow={null}
           />
-        )} */}
-{showWorkflowForm && !isEditModalOpen && (
-  <NewWorkflowForm
-    saveWorkflow={saveWorkflow}
-    closeWorkflowForm={closeWorkflowForm}
-    initialWorkflow={null}
-  />
-)}
-
-{showEditModal && (
-  <EditWorkflowForm
-    initialWorkflow={selectedWorkflow}
-    handleSaveEditedWorkflow={handleSaveEditedWorkflow}
-    closeWorkflowForm={() => setShowEditModal(false)}
-  />
-)}
-
-
-
-
-
-        {/* Add other components like Dashboard, NavigationMenu, etc. */}
+        )}
+        {showEditModal && (
+          <EditWorkflowForm
+            initialWorkflow={selectedWorkflow}
+            handleSaveEditedWorkflow={handleSaveEditedWorkflow}
+            closeWorkflowForm={() => setShowEditModal(false)}
+          />
+        )}
+       
       </main>
 
       {workflows.map((workflow, index) => (
@@ -153,18 +169,17 @@ const handleDeleteWorkflow = async (workflowToDelete) => {
         </div>
       ))}
 
-{isEditModalOpen && (
-  <Modal isOpen={isEditModalOpen} closeModal={() => setIsEditModalOpen(false)}>
-    <NewWorkflowForm 
-      saveWorkflow={handleSaveEditedWorkflow} 
-      closeWorkflowForm={() => setIsEditModalOpen(false)} 
-      initialWorkflow={selectedWorkflow}
-      handleSaveEditedWorkflow={handleSaveEditedWorkflow}
-    />
-  </Modal>
-)}
-
-
+      {isEditModalOpen && (
+        <Modal isOpen={isEditModalOpen} closeModal={() => setIsEditModalOpen(false)}>
+          <NewWorkflowForm 
+            saveWorkflow={handleSaveEditedWorkflow} 
+            closeWorkflowForm={() => setIsEditModalOpen(false)} 
+            initialWorkflow={selectedWorkflow}
+            handleSaveEditedWorkflow={handleSaveEditedWorkflow}
+          />
+        </Modal>
+      )} </>
+      ) : <Auth setUser={setUser} /> }
     </div>
   );
 }

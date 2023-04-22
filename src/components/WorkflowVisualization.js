@@ -1,7 +1,7 @@
 import React from 'react';
 import '../WorkflowVisualization.css';
 
-const WorkflowVisualization = ({ workflow, onEditWorkflow, onDeleteWorkflow,setIsEditModalOpen }) => {
+const WorkflowVisualization = ({ workflow, workflowId, onEditWorkflow, onDeleteWorkflow,setIsEditModalOpen }) => {
   const renderTasks = () => {
     return workflow.tasks.map((task, index) => (
       <div key={index} className="task">
@@ -12,10 +12,13 @@ const WorkflowVisualization = ({ workflow, onEditWorkflow, onDeleteWorkflow,setI
           {task.dueDate && <p>Due Date: {task.dueDate}</p>}
           {task.priority && <p>Priority: {task.priority}</p>}
           <button onClick={() => {
-            onEditWorkflow(index);
+            onEditWorkflow(workflowId);
             setIsEditModalOpen(true);
           }}>Edit</button>
-          <button onClick={() => onDeleteWorkflow(index)}>Delete</button>
+          {/* <button onClick={() => onDeleteWorkflow(index)}>Delete</button> */
+          // <button onClick={() => onDeleteWorkflow(workflow)}>Delete</button>
+
+          }
         </div>
       </div>
     ));
@@ -23,14 +26,16 @@ const WorkflowVisualization = ({ workflow, onEditWorkflow, onDeleteWorkflow,setI
 
   
   const renderConnections = () => {
+
     const connectors = [];
-  
+
     workflow.tasks.forEach((task, taskIndex) => {
+      // console.log("task", task)
       task.dependencies.forEach((dependencyIndex) => {
         const startY = 50 * taskIndex + 25;
         const endY = 50 * dependencyIndex + 25;
         const middleY = (startY + endY) / 2;
-  
+
         connectors.push(
           <React.Fragment key={`${taskIndex}-${dependencyIndex}`}>
             <div
@@ -65,6 +70,7 @@ const WorkflowVisualization = ({ workflow, onEditWorkflow, onDeleteWorkflow,setI
             ></div>
           </React.Fragment>
         );
+        // console.log(connectors);
       });
     });
   

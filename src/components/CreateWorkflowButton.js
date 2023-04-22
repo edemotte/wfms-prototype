@@ -2,7 +2,7 @@ import React from 'react';
 
 const CreateWorkflowButton = ({ openWorkflowForm }) => {
   return (
-    <button onClick={openWorkflowForm}>
+    <button className="create-workflow-button" onClick={openWorkflowForm}>
       Create a New Workflow
     </button>
   );

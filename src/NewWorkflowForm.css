@@ -76,7 +76,7 @@
   .new-workflow-form button[type="button"]:first-of-type {
     background-color: #3f51b5;
     color: white;
-    margin-right: 10px;
+    /* margin-right: 10px; */
   }
   
   .new-workflow-form button[type="button"]:first-of-type:hover {

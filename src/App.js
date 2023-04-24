@@ -31,10 +31,16 @@ function App() {
     }
   };
 
-    const handleSaveNewWorkflow = (workflow) => {
-    setWorkflows([...workflows, workflow]);
-    setIsCreateModalOpen(false);
+  const handleSaveNewWorkflow = async (workflow) => {
+    try {
+      const docRef = await addDoc(collection(db, 'workflows'), workflow);
+      console.log('New workflow saved with ID:', docRef.id);
+      setWorkflows([...workflows, { ...workflow, id: docRef.id }]);
+    } catch (error) {
+      console.error('Error saving workflow:', error);
+    }
   };
+  
 
   
 
